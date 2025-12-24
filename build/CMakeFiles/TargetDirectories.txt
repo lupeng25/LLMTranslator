@@ -1,3 +1,0 @@
-E:/code/LLMTranslator/build/CMakeFiles/LLMTranslator.dir
-E:/code/LLMTranslator/build/CMakeFiles/ALL_BUILD.dir
-E:/code/LLMTranslator/build/CMakeFiles/ZERO_CHECK.dir

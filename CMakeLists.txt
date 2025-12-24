@@ -14,12 +14,12 @@ set(CMAKE_PREFIX_PATH "D:/Qt/Qt5.12.9/5.12.9/msvc2017_64" ${CMAKE_PREFIX_PATH})
 find_package(Qt5 COMPONENTS Widgets Network Xml REQUIRED)
 
 add_executable(LLMTranslator WIN32
-    main.cpp
-    MainWindow.cpp
-    MainWindow.h
-    TranslatorEngine.cpp
-    TranslatorEngine.h
-    LLMTranslator.rc
+    src/main.cpp
+    src/MainWindow.cpp
+    src/MainWindow.h
+    src/TranslatorEngine.cpp
+    src/TranslatorEngine.h
+    resources/LLMTranslator.rc
 )
 
 target_link_libraries(LLMTranslator PRIVATE
