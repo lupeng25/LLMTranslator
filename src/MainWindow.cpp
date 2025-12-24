@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QApplication>
+#include <QMenu>
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1600)
 #pragma execution_character_set("utf-8")
@@ -193,6 +194,11 @@ void MainWindow::setupUi()
     settingsLayout->addWidget(new QLabel(QString::fromUtf8("\xE6\xA8\xA1\xE5\x9E\x8B\xE5\x90\x8D\xE7\xA7\xB0:")), 2, 0); // Model Name
     settingsLayout->addWidget(m_modelEdit, 2, 1);
     
+    // Add Retranslate All Checkbox
+    m_retranslateCheck = new QCheckBox(QString::fromUtf8("\xE9\x87\x8D\xE6\x96\xB0\xE7\xBF\xBB\xE8\xAF\x91\xE6\x89\x80\xE6\x9C\x89\xE6\x9D\xA1\xE7\x9B\xAE (Retranslate All)"));
+    // Add some styling or spacing if needed
+    settingsLayout->addWidget(m_retranslateCheck, 3, 1);
+    
     mainLayout->addWidget(settingsGroup);
     
     // --- Controls ---
@@ -235,6 +241,23 @@ void MainWindow::setupUi()
     m_logEdit = new QTextEdit();
     m_logEdit->setReadOnly(true);
     m_logEdit->setPlaceholderText(QString::fromUtf8("\xE6\x97\xA5\xE5\xBF\x97\xE5\xB0\x86\xE6\x98\xBE\xE7\xA4\xBA\xE5\x9C\xA8\xE8\xBF\x99\xE9\x87\x8C...")); // "Logs will appear here..."
+    m_logEdit->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(m_logEdit, &QTextEdit::customContextMenuRequested, this, [this](const QPoint &pos) {
+        QMenu *menu = new QMenu(this);
+        
+        QAction *copyAct = menu->addAction("Copy");
+        copyAct->setEnabled(m_logEdit->textCursor().hasSelection());
+        connect(copyAct, &QAction::triggered, m_logEdit, &QTextEdit::copy);
+        
+        menu->addAction("Select All", m_logEdit, &QTextEdit::selectAll);
+        
+        menu->addSeparator();
+        
+        menu->addAction(QString::fromUtf8("\xE6\xB8\x85\xE7\xA9\xBA\xE6\x97\xA5\xE5\xBF\x97"), m_logEdit, &QTextEdit::clear); // "Clear Log"
+        
+        menu->exec(m_logEdit->mapToGlobal(pos));
+        delete menu;
+    });
     mainLayout->addWidget(m_logEdit);
     
     connect(m_browseBtn, &QPushButton::clicked, this, &MainWindow::onBrowse);
@@ -277,8 +300,9 @@ void MainWindow::onStart()
         QString targetLang = m_langCombo->currentText();
         QString apiUrl = m_apiEdit->text();
         QString modelName = m_modelEdit->text();
+        bool retranslateAll = m_retranslateCheck->isChecked();
         
-        m_engine->startTranslation(targetLang, apiUrl, modelName);
+        m_engine->startTranslation(targetLang, apiUrl, modelName, retranslateAll);
     } else {
         m_startBtn->setEnabled(true);
     }

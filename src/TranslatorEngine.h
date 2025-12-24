@@ -31,8 +31,12 @@ public:
     int getUnfinishedCount() const;
     
     // Start translation process
-    void startTranslation(const QString &targetLang, const QString &apiUrl, const QString &modelName);
+    // retranslateAll: if true, translate all items even if they are already translated
+    void startTranslation(const QString &targetLang, const QString &apiUrl, const QString &modelName, bool retranslateAll = false);
     void stopTranslation();
+    
+    // Prepare items to translate based on the flag
+    void prepareItems(bool retranslateAll);
 
 signals:
     void progressUpdated(int current, int total);

@@ -7,6 +7,7 @@
 #include <QTextEdit>
 #include <QProgressBar>
 #include <QPushButton>
+#include <QCheckBox>
 #include <QGroupBox>
 #include "TranslatorEngine.h"
 
@@ -35,6 +36,7 @@ private:
     QComboBox *m_langCombo;
     QLineEdit *m_apiEdit;
     QLineEdit *m_modelEdit;
+    QCheckBox *m_retranslateCheck; // Checkbox for retranslating all items
     
     QTextEdit *m_logEdit;
     QProgressBar *m_progressBar;

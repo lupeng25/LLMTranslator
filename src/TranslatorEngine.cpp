@@ -27,6 +27,13 @@ bool TranslatorEngine::loadFile(const QString &filePath)
     }
     file.close();
 
+    // Default: load only unfinished
+    prepareItems(false);
+    return true;
+}
+
+void TranslatorEngine::prepareItems(bool retranslateAll)
+{
     m_itemsToTranslate.clear();
     
     QDomElement root = m_doc.documentElement(); // TS
@@ -50,7 +57,9 @@ bool TranslatorEngine::loadFile(const QString &filePath)
                         QString type = translationElem.attribute("type");
                         QString text = translationElem.text();
                         
-                        if (type == "unfinished" || text.isEmpty()) {
+                        // If retranslateAll is true, add all items.
+                        // Otherwise, only add unfinished or empty items.
+                        if (retranslateAll || type == "unfinished" || text.isEmpty()) {
                             TranslationItem item;
                             item.context = contextName;
                             item.source = sourceElem.text();
@@ -65,8 +74,7 @@ bool TranslatorEngine::loadFile(const QString &filePath)
         contextNode = contextNode.nextSibling();
     }
     
-    emit logMessage(QString("Loaded file. Found %1 items to translate.").arg(m_itemsToTranslate.size()));
-    return true;
+    emit logMessage(QString("Prepared %1 items to translate (Retranslate All: %2).").arg(m_itemsToTranslate.size()).arg(retranslateAll ? "Yes" : "No"));
 }
 
 bool TranslatorEngine::saveFile(const QString &filePath)
@@ -90,8 +98,11 @@ int TranslatorEngine::getUnfinishedCount() const
     return m_itemsToTranslate.size();
 }
 
-void TranslatorEngine::startTranslation(const QString &targetLang, const QString &apiUrl, const QString &modelName)
+void TranslatorEngine::startTranslation(const QString &targetLang, const QString &apiUrl, const QString &modelName, bool retranslateAll)
 {
+    // Re-prepare items based on the flag right before starting
+    prepareItems(retranslateAll);
+
     if (m_itemsToTranslate.isEmpty()) {
         emit logMessage("Nothing to translate.");
         emit translationFinished();
