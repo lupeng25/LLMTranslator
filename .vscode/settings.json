@@ -1,0 +1,11 @@
+{
+  "C_Cpp.default.compilerPath": "D:/Microsoft Visual Studio/18/VC/Tools/MSVC/14.50.35717/bin/Hostx64/x64/cl.exe",
+  "C_Cpp.default.intelliSenseMode": "windows-msvc-x64",
+  "C_Cpp.default.cppStandard": "c++17",
+  "cmake.buildDirectory": "${workspaceFolder}/build",
+  "cmake.generator": "Visual Studio 18 2026",
+  "cmake.configureSettings": {
+    "Qt5_DIR": "D:/Qt/Qt5.12.9/5.12.9/msvc2017_64/lib/cmake/Qt5",
+    "CMAKE_PREFIX_PATH": "D:/Qt/Qt5.12.9/5.12.9/msvc2017_64"
+  }
+}

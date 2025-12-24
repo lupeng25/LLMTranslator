@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug LLMTranslator (MSVC)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Debug/LLMTranslator.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}/build/Debug",
+            "preLaunchTask": "CMake Build (Debug)",
+            "environment": [
+                { "name": "PATH", "value": "${workspaceFolder}/build/Debug;E:/Anaconda/Library/bin;${env:PATH}" }
+            ]
+        },
+        {
+            "name": "Debug LLMTranslator (CodeLLDB)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Debug/LLMTranslator.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}/build/Debug",
+            "preLaunchTask": "CMake Build (Debug)",
+            "env": {
+                "PATH": "${workspaceFolder}/build/Debug;E:/Anaconda/Library/bin;${env:PATH}"
+            }
+        }
+    ]
+}
