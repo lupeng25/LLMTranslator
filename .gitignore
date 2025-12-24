@@ -33,6 +33,9 @@ _deps/
 *.sdf
 *.opensdf
 *.opendb
+*.obj
+moc_*.cpp
+*.ilk
 .vs/
 out/
 
